@@ -2,17 +2,20 @@ package fr.syalioune.kafka.policy;
 
 import org.apache.kafka.common.config.TopicConfig;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.regex.Pattern;
 
 /**
  * Topic policy POJO.
  */
-public class MyTopicPolicy {
+public class TopicPolicy {
 
     private String name;
 
-    private Pattern regexp;
+    private int order = Integer.MAX_VALUE;
+
+    private Pattern pattern;
 
     private int minPartitions = 0;
 
@@ -28,7 +31,7 @@ public class MyTopicPolicy {
 
     private List<String> allowedCleanupPolicies = List.of(TopicConfig.CLEANUP_POLICY_COMPACT, TopicConfig.CLEANUP_POLICY_DELETE);
 
-    private long minRetentionMs = 0;
+    private long minRetentionMs = Duration.ofHours(1).toMillis();
 
     private long maxRetentionMs = Long.MAX_VALUE;
 
@@ -40,12 +43,20 @@ public class MyTopicPolicy {
         this.name = name;
     }
 
-    public Pattern getRegexp() {
-        return regexp;
+    public int getOrder() {
+        return order;
     }
 
-    public void setRegexp(Pattern regexp) {
-        this.regexp = regexp;
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public Pattern getPattern() {
+        return pattern;
+    }
+
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 
     public int getMinPartitions() {
